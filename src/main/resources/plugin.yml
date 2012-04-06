@@ -1,12 +1,11 @@
 name: MyHome
-version: 2.2
+version: 2.3
 author: spathizilla
 main: me.taylorkelly.myhome.MyHome
 website: http://forums.bukkit.org/threads/13313/
 softdepend:
-  - Register
-  - Help
-commands:
+  - Vault
+  commands:
   home:
     description: All of the MyHome commands
     usage: /<command> help - Displays the MyHome commands
