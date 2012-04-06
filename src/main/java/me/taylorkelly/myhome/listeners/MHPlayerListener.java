@@ -73,6 +73,10 @@ public class MHPlayerListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST) 
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
+		if(!HomeSettings.respawnToHome) {
+			return;
+		}
+		
 		if (!HomeSettings.noHomeRespawnWorlds.contains(event.getPlayer().getLocation().getWorld().getName()) && HomeSettings.respawnToHome && homeList.homeExists(event.getPlayer().getName())) {
 			Location location = homeList.getHomeFor(event.getPlayer()).getLocation(plugin.getServer());
 			if (location != null) {
