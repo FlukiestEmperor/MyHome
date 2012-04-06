@@ -5,11 +5,9 @@ import me.taylorkelly.myhome.data.HomeEconomy;
 import me.taylorkelly.myhome.data.HomeList;
 import me.taylorkelly.myhome.listeners.MHEntityListener;
 import me.taylorkelly.myhome.listeners.MHPlayerListener;
-import me.taylorkelly.myhome.listeners.MHPluginListener;
 import me.taylorkelly.myhome.locale.LocaleManager;
 import me.taylorkelly.myhome.permissions.HomePermissions;
 import me.taylorkelly.myhome.sql.ConnectionManager;
-import me.taylorkelly.myhome.utils.HomeHelp;
 import me.taylorkelly.myhome.utils.HomeLogger;
 import me.taylorkelly.myhome.utils.MHUtils;
 
@@ -21,7 +19,6 @@ public class MyHome extends JavaPlugin {
 	
 	private MHPlayerListener playerListener;
 	private MHEntityListener entityListener;
-	private MHPluginListener pluginListener;
 	private HomeList homeList;
 	public String name;
 	public String version;
@@ -55,8 +52,7 @@ public class MyHome extends JavaPlugin {
 	
 		homeList = new HomeList(getServer());
 		LocaleManager.init();
-		HomePermissions.initialize(this);
-		HomeHelp.initialize(this);
+		HomePermissions.init(this);
 		HomeEconomy.init(this);
 		
 		MyHomeCommand cmdmgr = new MyHomeCommand(this, homeList);
@@ -66,14 +62,12 @@ public class MyHome extends JavaPlugin {
 		
 		this.playerListener = new MHPlayerListener(homeList, this);
 		this.entityListener = new MHEntityListener(this);
-		this.pluginListener = new MHPluginListener(this);
 		registerEvents();
 
 		HomeLogger.info(name + " " + version + " enabled");
 	}
 	
 	private void registerEvents() {
-		pm.registerEvents(pluginListener, this);
 		pm.registerEvents(playerListener, this);
 		pm.registerEvents(entityListener, this);
 	}

@@ -8,7 +8,7 @@ import org.bukkit.plugin.Plugin;
 public class HomePermissions {
 	private transient static PermissionsHandler permissionsHandler;
 
-	public static void initialize(Plugin plugin) {
+	public static void init(Plugin plugin) {
 		permissionsHandler = new PermissionsHandler(plugin);
 	}
 	

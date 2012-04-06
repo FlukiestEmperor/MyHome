@@ -8,7 +8,7 @@ import org.bukkit.plugin.PluginManager;
 
 public class PermissionsHandler implements IPermissionsHandler {
 	private enum PermHandler {
-		PERMISSIONSEX, PERMISSIONS3, PERMISSIONS2, GROUPMANAGER, BPERMISSIONS, BPERMISSIONS2, SUPERPERMS, NONE
+		PERMISSIONSEX, PERMISSIONS3, PERMISSIONS2, GROUPMANAGER, BPERMISSIONS, BPERMISSIONS2, SUPERPERMS, VAULT, NONE
 	}
 	private static PermHandler permplugin = PermHandler.NONE;
 	private transient IPermissionsHandler handler = new NullHandler();
@@ -94,10 +94,22 @@ public class PermissionsHandler implements IPermissionsHandler {
 			return;
 		}
 
+		final Plugin Vaultplugin = pluginManager.getPlugin("Vault");
+		if (Vaultplugin != null && Vaultplugin.isEnabled()) {
+			if (!(handler instanceof VaultHandler)) {
+				permplugin = PermHandler.VAULT;
+				String version = Vaultplugin.getDescription().getVersion();
+				HomeLogger.info("Access Control: Using Vault v"+ version);
+				handler = new VaultHandler(Vaultplugin, plugin);
+			}
+			return;
+		}
+		
 		if (permplugin == PermHandler.NONE) {
 			if (!(handler instanceof SuperpermsHandler)) {
-				HomeLogger.info("Access Control: Using SuperPerms");
+				HomeLogger.info("Access Control: Using Bukkit's Permssion System (Vault is recommended!)");
 				handler = new SuperpermsHandler(this.plugin);
+				permplugin = PermHandler.SUPERPERMS;
 			}
 		}
 	}
